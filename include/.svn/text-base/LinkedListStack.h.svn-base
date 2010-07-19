@@ -1,0 +1,23 @@
+/*
+ *  LinkedListStack.h
+ *  XQL
+ *
+ *  Created by Izaak Schroeder on 09-12-04.
+ *  Copyright 2009 __MyCompanyName__. All rights reserved.
+ *
+ */
+
+#ifndef _I_LINKEDLISTSTACK_H_
+#define _I_LINKEDLISTSTACK_H_
+
+#include "LinkedList.h"
+#include "ListStack.h"
+
+namespace I
+{
+	template <typename T> class LinkedListStack : public ListStack<LinkedList, T>
+	{
+	};
+};
+
+#endif

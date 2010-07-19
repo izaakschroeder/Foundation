@@ -1,0 +1,233 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/xql/!svn/ver/19/trunk/Foundation/include
+END
+Error.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/xql/!svn/ver/2/trunk/Foundation/include/Error.h
+END
+TestSuite.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/xql/!svn/ver/4/trunk/Foundation/include/TestSuite.h
+END
+Collection.h
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/xql/!svn/ver/30/trunk/Foundation/include/Collection.h
+END
+XString.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/xql/!svn/ver/19/trunk/Foundation/include/XString.h
+END
+HashSet.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/xql/!svn/ver/22/trunk/Foundation/include/HashSet.h
+END
+Graph.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/xql/!svn/ver/10/trunk/Foundation/include/Graph.h
+END
+LinkedList.h
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/xql/!svn/ver/29/trunk/Foundation/include/LinkedList.h
+END
+Divisable.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/xql/!svn/ver/2/trunk/Foundation/include/Divisable.h
+END
+Comparable.h
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/xql/!svn/ver/30/trunk/Foundation/include/Comparable.h
+END
+MergeSort.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/xql/!svn/ver/2/trunk/Foundation/include/MergeSort.h
+END
+BasicString.h
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/xql/!svn/ver/3/trunk/Foundation/include/BasicString.h
+END
+List.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/xql/!svn/ver/19/trunk/Foundation/include/List.h
+END
+Subtractable.h
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/xql/!svn/ver/2/trunk/Foundation/include/Subtractable.h
+END
+Addable.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/xql/!svn/ver/2/trunk/Foundation/include/Addable.h
+END
+Map.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/xql/!svn/ver/22/trunk/Foundation/include/Map.h
+END
+ListQueue.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/xql/!svn/ver/19/trunk/Foundation/include/ListQueue.h
+END
+ComparisonSort.h
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/xql/!svn/ver/2/trunk/Foundation/include/ComparisonSort.h
+END
+Multipliable.h
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/xql/!svn/ver/2/trunk/Foundation/include/Multipliable.h
+END
+EqualityComparable.h
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/xql/!svn/ver/2/trunk/Foundation/include/EqualityComparable.h
+END
+QuickSort.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/xql/!svn/ver/29/trunk/Foundation/include/QuickSort.h
+END
+Queue.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/xql/!svn/ver/19/trunk/Foundation/include/Queue.h
+END
+EqualityComparator.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/xql/!svn/ver/22/trunk/Foundation/include/EqualityComparator.h
+END
+Sort.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/xql/!svn/ver/29/trunk/Foundation/include/Sort.h
+END
+Iterable.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/xql/!svn/ver/2/trunk/Foundation/include/Iterable.h
+END
+MapSet.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/xql/!svn/ver/22/trunk/Foundation/include/MapSet.h
+END
+Iterator.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/xql/!svn/ver/2/trunk/Foundation/include/Iterator.h
+END
+Set.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/xql/!svn/ver/22/trunk/Foundation/include/Set.h
+END
+ListStack.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/xql/!svn/ver/19/trunk/Foundation/include/ListStack.h
+END
+MutableIterator.h
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/xql/!svn/ver/2/trunk/Foundation/include/MutableIterator.h
+END
+ReferenceEqualityComparator.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/xql/!svn/ver/30/trunk/Foundation/include/ReferenceEqualityComparator.h
+END
+Stack.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/xql/!svn/ver/19/trunk/Foundation/include/Stack.h
+END
+Object.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/xql/!svn/ver/3/trunk/Foundation/include/Object.h
+END
+LinkedListQueue.h
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/xql/!svn/ver/15/trunk/Foundation/include/LinkedListQueue.h
+END
+Hashable.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/xql/!svn/ver/2/trunk/Foundation/include/Hashable.h
+END
+ArrayList.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/xql/!svn/ver/15/trunk/Foundation/include/ArrayList.h
+END
+HashMap.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/xql/!svn/ver/22/trunk/Foundation/include/HashMap.h
+END
+Core.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/xql/!svn/ver/19/trunk/Foundation/include/Core.h
+END
+LinkedListStack.h
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/xql/!svn/ver/22/trunk/Foundation/include/LinkedListStack.h
+END

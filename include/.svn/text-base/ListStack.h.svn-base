@@ -1,0 +1,74 @@
+/*
+ *  ListStack.h
+ *  XQL
+ *
+ *  Created by Izaak Schroeder on 09-11-27.
+ *  Copyright 2009 __MyCompanyName__. All rights reserved.
+ *
+ */
+
+
+#ifndef _LISTSTACK_H_
+#define _LISTSTACK_H_
+
+#include "List.h"
+#include "Stack.h"
+
+namespace I 
+{
+	template <template<typename> class LT, typename T> class ListStack : public Stack<T>
+	{
+	public:
+		ListStack() : Stack<T>() 
+		{ 
+		
+		};
+		ListStack(const ListStack<LT, T>& Other) : Data(Other.Data)
+		{ 
+			
+		};
+		
+		virtual ~ListStack() 
+		{
+			
+		};
+		
+		bool IsEmpty() const
+		{
+			return Data.IsEmpty();
+		}
+		
+		unsigned int GetSize() const 
+		{
+			return Data.GetSize();
+		};
+		
+		T& Pop() 
+		{
+			const unsigned int i = Data.GetSize()-1;
+			T& tmp = Data[i];
+			Data.Remove(i);
+			return tmp;
+		};
+		
+		T& Peek() const
+		{
+			return Data[Data.GetSize()-1];
+		}
+		
+		void Push(const T& item)
+		{
+			Data.Append(item);
+		};
+		
+		void Clear()
+		{
+			Data.Clear();
+		}
+		
+	private:
+		LT<T> Data;
+	};
+};
+
+#endif

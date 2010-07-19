@@ -1,0 +1,330 @@
+/*
+ *  HashMap.h
+ *  XQL
+ *
+ *  Created by Izaak Schroeder on 09-11-24.
+ *  Copyright 2009 __MyCompanyName__. All rights reserved.
+ *
+ */
+
+#ifndef _HASHMAP_H_
+#define _HASHMAP_H_
+
+#include "Core.h"
+#include "LinkedList.h"
+#include "Map.h"
+#include "Iterable.h"
+#include "MutableIterator.h"
+#include "EqualityComparator.h"
+
+#include <iostream>
+
+namespace I 
+{
+	template <typename KT, typename VT, template <typename> class KC = EqualityComparator>class KeyValuePair : public EqualityComparable<class KeyValuePair<KT, VT, KC> >
+	{
+	public:
+		KeyValuePair(const KeyValuePair& KV) : Key(KV.Key), Value(KV.Value) { };
+		KeyValuePair(KT k, VT v) : Key(k), Value(v) { };
+		KeyValuePair& operator=(const KeyValuePair<KT, VT,KC>& rhs) 
+		{
+			Key = rhs.Key;
+			Value = rhs.Value;
+			return *this;
+		}
+		KC<KT> KCmp;
+		bool operator == (const KeyValuePair<KT,VT,KC>& Other) const 
+		{ 
+			return ((KCmp)(Key, Other.Key)) && Value == Other.Value; 
+		};
+		KT Key;
+		VT Value;
+		
+	};
+		
+	template <typename KT, typename VT, template <class> class KC = EqualityComparator> class HashMap : public Map<KT, VT, KC>
+	{
+	public:
+		typedef KeyValuePair<KT,VT,KC>* BucketType;
+		typedef LinkedList<BucketType> ListType;
+		KC<KT> KCmp;
+		
+		HashMap(unsigned int InitialSize = 31) : Size(0), BucketSize(InitialSize), Map<KT, VT, KC>() 
+		{
+			Buckets = new ListType[BucketSize];
+		};
+		
+		HashMap(const HashMap<KT, VT, KC>& Other) : Size(0), BucketSize(Other.BucketSize), Map<KT,VT, KC>()
+		{
+			Buckets = new ListType[BucketSize];
+			iterate(Iterator<BucketType>, KVP, new BucketIterator(Other))
+				Set((*KVP)->Key, (*KVP)->Value);
+		}
+		
+		~HashMap() {
+			//FIXME: WTF is this not working for?
+			delete[] Buckets;
+
+		};
+		
+		unsigned int GetSize() const 
+		{ 
+			return Size; 
+		};
+		
+		bool operator == (const Map<KT,VT,KC>& Other) const
+		{
+			if (GetSize() != Other.GetSize())
+				return false;
+			iterate(Iterator<BucketType>, KVP, new BucketIterator(*this))
+			{
+				if (!Other.ContainsKey((*KVP)->Key))
+					return false;
+				if (Other[(*KVP)->Key] != (*KVP)->Value)
+					return false;
+			}
+			return true;
+		};
+		
+		VT& operator [] (const KT& Key) const 
+		{
+			/*
+			unsigned int H = Hash(Key);
+			List<BucketType>& Bucket = Buckets[H];
+			foreach(BucketType, KVP, Bucket)
+				if ((*KVP)->Key == Key)
+					return (VT&)(*KVP)->Value;
+			BucketType KVP;
+			KVP = new KeyValuePair<KT,VT>(Key, VT());
+			Bucket.Append(KVP);
+			return (VT&)KVP->Value;*/
+			const BucketType& KVP = RequireKey(Key);
+			return (VT&)KVP->Value;
+		};
+		
+		VT& Get(const KT& Key) const 
+		{
+			const BucketType& KVP = RequireKey(Key);
+			return (VT&)KVP->Value;
+		};
+		
+		void Unset(const KT& Key)
+		{
+			unsigned int H = Hash(Key);
+			List<BucketType>& Bucket = Buckets[H];
+			iterate(MutableIterator<BucketType>, i, Bucket.GetMutableIterator()) 
+			{
+				if ((KCmp)((*i)->Key, Key))
+				{
+					delete *i;
+					i.Remove();
+					--Size;
+					//std::cout << this << "Unset" << std::endl;
+					//VerifyState();
+					return;
+				}
+			}
+			throw KeyNotFoundError();
+		}
+		
+		bool Set(const KT& Key, const VT& Value)
+		{
+			unsigned int H = Hash(Key);
+			List<BucketType>& Bucket = Buckets[H];
+			foreach(BucketType, KVP, Bucket)
+			{
+				if (KCmp(Key, (*KVP)->Key))
+				{
+					//delete (*KVP);
+					//(*KVP) = new KeyValuePair<KT,VT>(Key, Value);
+					(*KVP)->Value = Value;
+					//std::cout << this << " Set (existing)" << std::endl;
+					//VerifyState();
+					return false;
+				}
+			}
+			Bucket.Append(new KeyValuePair<KT,VT,KC>(Key, Value));
+			//std::cout << this << " Set (new)" << std::endl;
+			++Size;
+			VerifyState();
+			return true;
+		}
+		
+		bool ContainsKey(const KT& Key) const
+		{
+			unsigned int H = Hash(Key);
+			List<BucketType>& Bucket = Buckets[H];
+			foreach(BucketType, KVP, Bucket)
+				if ((KCmp)((*KVP)->Key, Key))
+					return true;
+			return false;
+		}
+		
+		Iterator<VT>* GetIterator() const
+		{
+			return new ValueIterator(*this);
+		}
+		
+		void Clear() {
+			for(unsigned int i = 0; i<BucketSize; ++i)
+				Buckets[i].Clear();
+			Size = 0;
+			VerifyState();
+		}
+		
+		/*
+		Iterator<BucketType>& GetIterator()
+		{
+			return *(new BucketIterator(this));
+		}*/
+		
+		Map<KT,VT,KC>& operator = (const HashMap<KT,VT,KC>& Other) {
+			if (&Other == this)
+				return *this;
+			//TODO: Optimize this
+			//std::cout << "Copying" << std::endl;
+			Clear();
+			iterate(Iterator<BucketType>, KVP, new BucketIterator(Other))
+				Set((*KVP)->Key, (*KVP)->Value);
+			return *this;
+		}
+		
+		Map<KT,VT,KC>& operator = (const Map<KT,VT,KC>& Other) {
+			if (&Other == this)
+				return *this;
+			Clear();
+			foreach(BucketType, KVP, new BucketIterator(Other))
+				Set(KVP.Key, KVP.Value);
+		}
+		
+		bool VerifyState()
+		{
+			unsigned int tSize = 0;
+			for (unsigned int i=0; i<BucketSize; ++i)
+				tSize += Buckets[i].GetSize();
+			if (tSize != Size)
+			{
+				std::cout << this << " ERROR STATE MISMATCH! Hashmap thinks it has " << Size << " elements, when it only has " << tSize << " ones! " << std::endl;
+				return false;
+			}
+			return true;
+		}
+		
+	private:
+		
+		class BucketIterator : public Iterator<BucketType>
+		{
+		public:
+			BucketIterator(const HashMap& m) : CurrentBucket(0), M(m)
+			{
+				do {
+					i = M.Buckets[CurrentBucket++].GetIterator();
+				}
+				while (!i->Valid() && CurrentBucket < M.BucketSize);
+			};
+			
+			bool Valid() const
+			{
+				return i->Valid();
+			}
+			
+			BucketType& Current() const
+			{
+				return i->Current();
+			}
+			
+			void Next()
+			{
+				i->Next();
+				while (!i->Valid() && CurrentBucket < M.BucketSize)
+					i = M.Buckets[CurrentBucket++].GetIterator();
+			}
+			
+		private:
+			unsigned int CurrentBucket;
+			const HashMap& M;
+			Iterator<BucketType>* i;
+		};
+		
+		class ValueIterator : public Iterator<VT>
+		{
+		public:
+			ValueIterator(const HashMap& M) : i(M) { };
+			
+			VT& Current() const
+			{
+				return i.Current()->Value;
+			};
+			
+			void Next()
+			{
+				i.Next();
+			};
+			
+			bool Valid() const
+			{
+				return i.Valid();
+			};
+		private:
+			BucketIterator i;
+		};
+		
+		const BucketType RequireKey(const KT& Key) const
+		{
+			unsigned int H = Hash(Key);
+			List<BucketType>& Bucket = Buckets[H];
+			foreach(BucketType, KVP, Bucket)
+			{
+				const BucketType x = *KVP;
+				if (KCmp(x->Key, Key))
+				{
+					return x;
+				}
+			}
+			throw KeyNotFoundError();
+		}
+		
+		
+		/**
+		 * Resize
+		 * Change the internal size of the storage allocated to the hash map
+		 *
+		 */
+		void Resize(unsigned int NewBucketSize) 
+		{
+			Buckets = realloc(Buckets, NewBucketSize*sizeof(BucketType));
+			BucketSize = NewBucketSize;
+			if (Buckets == NULL)
+				throw Error();
+			Rehash();
+		}
+		
+		/**
+		 * Rehash
+		 *
+		 *
+		 */
+		void Rehash() 
+		{
+			foreach(BucketType, b, (*this))
+				Set(b->Key, b->Value);
+		};
+		
+		/**
+		 * Hash
+		 *
+		 *
+		 */
+		unsigned int Hash(const KT& key) const
+		{
+			//FIXME: Calculate the hash
+			return 0 % BucketSize;
+		};
+		
+		unsigned int Size;
+		unsigned int BucketSize;
+		ListType* Buckets;
+	};
+};
+
+#endif

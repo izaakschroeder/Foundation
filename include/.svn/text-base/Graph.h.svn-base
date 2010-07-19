@@ -1,0 +1,171 @@
+/*
+ *  Graph.h
+ *  XQL
+ *
+ *  Created by Izaak Schroeder on 09-11-24.
+ *  Copyright 2009 __MyCompanyName__. All rights reserved.
+ *
+ */
+
+#ifndef _GRAPH_H
+#define _GRAPH_H
+
+#include "Core.h"
+
+namespace I {
+	template <class T, class W> class Graph
+	{
+	public:
+		Graph() 
+		{
+			
+		}
+		
+		virtual ~Graph() 
+		{
+			
+		}
+		
+		/**
+		 * Edge
+		 * 
+		 *
+		 */
+		class Edge
+		{
+		public:
+			Edge(Vertex* Or, Vertex* Ds, const W& D) : Origin(Or), Destination(Ds), Data(D) 
+			{
+				
+			}
+			
+			virtual ~Edge()
+			{
+				
+			}
+			
+			W& operator *() const 
+			{
+				return Data;
+			}
+			
+		protected:
+			/**
+			 * Origin
+			 * The connecting vertex in the pair
+			 */
+			Vertex* Orgin;
+			
+			/**
+			 * Destination
+			 * The conectee vertex in the pair
+			 * @type Vertex
+			 */
+			Vertex* Destination;
+			
+			/**
+			 * Data
+			 * The relationship between the two vertices
+			 */
+			W Data;
+		};
+		
+		/**
+		 * Vertex
+		 *
+		 *
+		 */
+		class Vertex
+		{
+		public:
+			Vertex(const T& D) : Data(D) 
+			{
+				
+			}
+			
+			virtual ~Vertex()
+			{
+				
+			}
+			
+			T& operator * () const
+			{
+				return Data;
+			}
+			
+			/**
+			 * PathExistsTo
+			 * Find if a path exists between two nodes
+			 * @param v Vertex to check against
+			 * @return True if a path exists, false otherwise
+			 * @note This is depth-first search
+			 */
+			bool PathExistsTo(const Vertex& v) const
+			{
+				/*
+				$visited = new Set();
+				$nodes = new Stack();
+				$nodes->Push($this);
+				while ($nodes->GetSize() > 0)
+				{
+					$node = $nodes->Pop();
+					if (!$visited[$node])
+					{
+						if (call_user_func($Func, $node->Data))
+							return;
+						$visited->Add($node);
+						foreach ($node->ConnectsTo() as $neighbour)
+						$nodes->Push($neighbour);
+					}
+				}*/
+			}
+			
+			/**
+			 * IsConnectedTo
+			 * Check to see if a vertex has a node as an
+			 * immediate neighbor
+			 * @param v The node to check against
+			 * @return True if the node is an immediate neighbor,
+			 * false otherwise
+			 */
+			bool IsConnectedTo(const Vertex& v) const
+			{
+				
+			}
+			
+			bool IsConnectedFrom(const Vertex& v) const
+			{
+				
+			}
+			
+			void ConnectTo(Vertex v)
+			{
+				
+			}
+			
+			//FIXME: Proper typing
+			void ConnectTo(Vertex v, int)
+			{
+				
+			}
+			
+			void DisconnectFrom(Vertex v)
+			{
+				
+			}
+			
+			void Remove()
+			{
+				
+			}
+			
+			
+		protected:
+			Map<Vertex,Edge> Destinations;
+			Map<Vertex,Edge> Sources;
+			T Data;
+		};
+	};
+}
+
+#endif

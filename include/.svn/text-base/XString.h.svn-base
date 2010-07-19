@@ -1,0 +1,28 @@
+/*
+ *  String.h
+ *  XQL
+ *
+ *  Created by Izaak Schroeder on 09-11-24.
+ *  Copyright 2009 __MyCompanyName__. All rights reserved.
+ *
+ */
+
+#ifndef _STRING_H_
+#define _STRING_H_
+
+#include "Iterable.h"
+
+namespace I {
+	
+	class CharacterEncoding
+	{
+			
+	};
+	
+	class Character {
+		
+	};
+	
+};
+
+#endif
